@@ -12,7 +12,7 @@ A real-time collaborative document editor built with [Velt](https://velt.dev), [
 - **Notifications** — Get notified when mentioned or when comments are replied to
 - **Huddle / Video Calls** — Start video calls with collaborators directly in the editor
 - **Rich Text Formatting** — Bold, italic, underline, strikethrough, headings via bubble menu
-- **Dark Theme** — Polished dark UI with customized Velt wireframe components
+- **Dark Theme** — Dark UI out of the box
 
 ## Tech Stack
 
@@ -20,7 +20,7 @@ A real-time collaborative document editor built with [Velt](https://velt.dev), [
 - **Editor:** [TipTap 3](https://tiptap.dev) with extensions
 - **Collaboration:** [Velt SDK 5](https://docs.velt.dev) (CRDT + Comments + Presence)
 - **CRDT Engine:** [Yjs](https://yjs.dev)
-- **Styling:** [Tailwind CSS 3](https://tailwindcss.com)
+- **Styling:** [Tailwind CSS 4](https://tailwindcss.com)
 - **Language:** TypeScript 5
 
 ## Getting Started
@@ -58,25 +58,29 @@ Open [http://localhost:3000](http://localhost:3000) to see the editor. Share the
 ```
 tiptap/
 ├── app/
-│   ├── layout.tsx                 # Root layout with user provider
-│   ├── page.tsx                   # Main page with VeltProvider
-│   ├── api/velt/token/route.ts    # JWT token generation API
-│   ├── document/                  # Document ID management
-│   └── userAuth/                  # User authentication context
+│   ├── globals.css                  # Global + editor styles
+│   ├── layout.tsx                   # Root layout with fonts and user provider
+│   ├── page.tsx                     # Main page (dynamic import, SSR disabled)
+│   ├── HomeClient.tsx               # Client entry: VeltProvider + collaboration
+│   ├── api/velt/token/route.ts      # JWT token generation API
+│   ├── document/                    # Document ID management
+│   └── userAuth/                    # User authentication context
 ├── components/
 │   ├── document/
-│   │   ├── document-canvas.tsx    # Main editor container
-│   │   └── TipTapComponent/       # TipTap editor with CRDT + Comments
-│   ├── header/                    # Top bar with Velt tools
-│   ├── sidebar/                   # Table of contents navigation
-│   └── velt/                      # Velt integration components
-│       ├── VeltCollaboration.tsx   # Comments + sidebar setup
+│   │   ├── document-canvas.tsx      # Main editor container
+│   │   └── TipTapComponent/         # TipTap editor with CRDT + Comments
+│   ├── header/                      # Top bar with Velt tools
+│   ├── sidebar/                     # Table of contents navigation
+│   └── velt/                        # Velt integration components
+│       ├── VeltCollaboration.tsx     # Comments, sidebar, dark mode setup
 │       ├── VeltInitializeDocument.tsx
-│       ├── VeltInitializeUser.tsx  # Auth provider hook
-│       ├── VeltTools.tsx          # Presence, notifications, huddle
-│       └── ui-customization/      # Custom wireframe components
-├── lib/utils.ts                   # Tailwind utility (cn)
-└── styles/globals.css             # Global + editor styles
+│       ├── VeltInitializeUser.tsx    # Auth provider hook
+│       └── VeltTools.tsx            # Presence, notifications, huddle
+├── lib/utils.ts                     # Tailwind utility (cn)
+├── eslint.config.mjs                # ESLint 9 flat config
+├── next.config.ts                   # Next.js config with Yjs deduplication
+├── postcss.config.mjs               # PostCSS with Tailwind v4
+└── tsconfig.json
 ```
 
 ## Customization
@@ -86,7 +90,6 @@ tiptap/
 The template uses demo user generation (`app/userAuth/AppUserContext.tsx`). Replace with your auth system:
 
 ```typescript
-// Instead of generateRandomUser(), use your auth:
 const currentUser = await yourAuthSystem.getCurrentUser();
 setUser({
   userId: currentUser.id,
@@ -104,9 +107,9 @@ Edit `components/document/TipTapComponent/constants.ts` to change the initial do
 
 Add extensions in `components/document/TipTapComponent/TipTapComponent.tsx` within the `extensions` array. Keep `undoRedo: false` in StarterKit (CRDT handles undo/redo).
 
-### Customize Velt Theme
+### Customize Velt UI
 
-Modify CSS variables in `components/velt/ui-customization/styles.css` to match your brand colors.
+Velt components work with their default styling out of the box. To customize the look of Velt components (comments, notifications, sidebar, etc.), see the [Velt UI Customization docs](https://docs.velt.dev/ui-customization/overview).
 
 ## Learn More
 

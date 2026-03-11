@@ -1,7 +1,6 @@
 "use client";
 import { useVeltClient, VeltComments, VeltCommentsSidebar } from "@veltdev/react";
 import VeltInitializeDocument from "./VeltInitializeDocument";
-import { VeltCustomization } from "./ui-customization/VeltCustomization";
 import { useEffect } from "react";
 import { useAppUser } from "@/app/userAuth/AppUserContext";
 
@@ -17,19 +16,22 @@ export function VeltCollaboration() {
     }
   }, [isUserLoggedIn, client]);
 
+  // [Velt] Enable dark mode to match the template's dark UI
+  useEffect(() => {
+    if (client) {
+      client.setDarkMode(true);
+    }
+  }, [client]);
+
   const groupConfig = {
-    enable: false
+    enable: false,
   };
 
   return (
     <>
       <VeltInitializeDocument />
-      <VeltComments
-        shadowDom={false}
-        textMode={false}
-      />
+      <VeltComments shadowDom={false} textMode={false} />
       <VeltCommentsSidebar groupConfig={groupConfig} />
-      <VeltCustomization />
     </>
   );
 }
