@@ -4,6 +4,10 @@ A real-time collaborative document editor built with [Velt](https://velt.dev), [
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FSnippyly-Docs%2Fvelt-next-js-templates%2Ftree%2Fmain%2Ftiptap&env=NEXT_PUBLIC_VELT_API_KEY,VELT_AUTH_TOKEN&envDescription=Get%20your%20Velt%20API%20key%20and%20auth%20token%20from%20console.velt.dev&envLink=https%3A%2F%2Fconsole.velt.dev)
 
+## Prerequisites
+
+You will need a **Velt API Key** and **Auth Token** to run this template. Sign up at [console.velt.dev](https://console.velt.dev) to create a project and obtain both credentials.
+
 ## Features
 
 - **Real-time CRDT Editing** — Multiple users can edit simultaneously with conflict-free resolution powered by Yjs
@@ -51,7 +55,9 @@ npm install
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to see the editor. Share the URL (with `?documentId=...`) with others to collaborate.
+Open [http://localhost:3000](http://localhost:3000) to see the editor.
+
+> **Note on demo users:** This template auto-generates a single random user per browser context and stores it in `localStorage`. You can fully interact with all features (comments, editing, notifications) as this one user. To test multi-user collaboration (presence avatars, live cursors, co-editing), open the same URL in an incognito window or a different browser — each will receive a different random user. To set up specific users or integrate your own auth, see the [Replace Authentication](#replace-authentication) section below.
 
 ## Project Structure
 
